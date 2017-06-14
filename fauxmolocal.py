@@ -35,7 +35,7 @@ import sys
 import time
 import urllib
 import uuid
-
+import subprocess
 
 
 # This XML is the minimum needed to define one of our virtual switches
@@ -358,19 +358,24 @@ class upnp_broadcast_responder(object):
 #
 # This example class takes two full URLs that should be requested when an on
 # and off command are invoked respectively. It ignores any return data.
-
 class rest_api_handler(object):
     def __init__(self, on_cmd, off_cmd):
         self.on_cmd = on_cmd
         self.off_cmd = off_cmd
 
     def on(self):
-        r = requests.get(self.on_cmd)
-        return r.status_code == 200
+        dbg("this is a call test %s" % self.on_cmd)
+        command = "python /home/pi/HAP-NodeJS/python/%s" % self.on_cmd  #this is to make a call to run a file specified in the fauxmo item
+        subprocess.call(command, shell=True)
+        status = 200
+        return status == 200
 
     def off(self):
-        r = requests.get(self.off_cmd)
-        return r.status_code == 200
+        dbg("this is the call test %s" % self.off_cmd)
+        command = "python /home/pi/HAP-NodeJS/python/%s" % self.off_cmd
+        subprocess.call(command, shell=True)
+        status = 200
+        return status == 200
 
 
 # Each entry is a list with the following elements:
@@ -383,9 +388,13 @@ class rest_api_handler(object):
 # 16 switches it can control. Only the first 16 elements of the FAUXMOS
 # list will be used.
 
+
+#['<NAMEOFLIGHT>', rest_api_handler('<ONSCRIPT>', '<OFFSCRIPT>'), <PORT>],
+
 FAUXMOS = [
-    ['office lights', rest_api_handler('http://192.168.5.4/ha-api?cmd=on&a=office', 'http://192.168.5.4/ha-api?cmd=off&a=office')],
-    ['kitchen lights', rest_api_handler('http://192.168.5.4/ha-api?cmd=on&a=kitchen', 'http://192.168.5.4/ha-api?cmd=off&a=kitchen')],
+    ['bedroom string lights', rest_api_handler('zap1on.py', 'zap1off.py'), 41393], 
+    ['kelseys lamp', rest_api_handler('zap2on.py', 'zap2off.py'), 41394],
+    ['living room string lights', rest_api_handler('zap3on.py', 'zap3off.py'), 41395],
 ]
 
 
