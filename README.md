@@ -1,4 +1,9 @@
-# fauxmo
+# fauxmolocal
+This fork is a modification of fauxmo so that instead of making API calls, it runs local scripts!
+
+
+**Original fauxmo readme below**
+
 **Emulated Belkin WeMo devices that work with the Amazon Echo**
 
 Visit [this Maker Musings article](http://www.makermusings.com/2015/07/13/amazon-echo-and-home-automation/) to learn more about using this code to integrate
